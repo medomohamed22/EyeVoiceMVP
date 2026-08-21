@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Eye Voice MVP</string>
+    <string name="accessibility_description">تحكم مساعد بالموبايل باستخدام اتجاه الوجه والصوت.</string>
+</resources>

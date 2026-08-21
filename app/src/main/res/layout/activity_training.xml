@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.eyevoice.CalibrationView
+        android:id="@+id/calibrationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="#99000000">
+
+        <TextView
+            android:id="@+id/trainingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="اختبار وتعلّم"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="21sp"/>
+
+        <TextView
+            android:id="@+id/trainingInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp"/>
+
+        <ProgressBar
+            android:id="@+id/trainingProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginTop="8dp"/>
+
+        <Button
+            android:id="@+id/trainingAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ابدأ المعايرة"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+</FrameLayout>
