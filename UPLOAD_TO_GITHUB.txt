@@ -1,0 +1,22 @@
+EYE VOICE MVP - GITHUB READY
+
+ارفع كل محتويات هذا المشروع إلى GitHub Repository واحد.
+
+الطريقة:
+1) افتح GitHub واعمل New repository.
+2) افتح الـRepository.
+3) اختر Add file > Upload files.
+4) فك ضغط هذا ZIP على جهازك.
+5) اسحب كل الملفات والمجلدات الموجودة داخله إلى صفحة GitHub.
+6) اضغط Commit changes.
+7) افتح Codemagic واربط نفس الـRepository.
+8) شغّل workflow الموجود في codemagic.yaml.
+9) بعد نجاح البناء نزّل:
+   app/build/outputs/apk/debug/app-debug.apk
+
+مهم:
+codemagic.yaml يجب أن يكون في جذر الـRepository بجانب:
+app/
+build.gradle
+settings.gradle
+gradle.properties

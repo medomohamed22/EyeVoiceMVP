@@ -2,25 +2,53 @@ workflows:
   android-debug:
     name: Eye Voice MVP 0.2 Android Debug
     max_build_duration: 60
+
     environment:
       java: 17
+
     scripts:
-      - name: Download Gradle 9.5
+      - name: Download Gradle 9.5.0
         script: |
-          curl -L https://services.gradle.org/distributions/gradle-9.5-bin.zip -o /tmp/gradle.zip
-          unzip -q /tmp/gradle.zip -d /tmp/gradle
+          set -e
+          GRADLE_VERSION="9.5.0"
+          GRADLE_ZIP="/tmp/gradle-${GRADLE_VERSION}-bin.zip"
+          GRADLE_DIR="/tmp/gradle-${GRADLE_VERSION}"
+
+          echo "Downloading Gradle ${GRADLE_VERSION}..."
+          curl --fail --location --retry 3 --retry-delay 2 \
+            "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
+            --output "$GRADLE_ZIP"
+
+          echo "Checking downloaded archive..."
+          unzip -t "$GRADLE_ZIP" >/dev/null
+
+          rm -rf "$GRADLE_DIR"
+          unzip -q "$GRADLE_ZIP" -d /tmp
+
+          "$GRADLE_DIR/bin/gradle" --version
+
       - name: Download MediaPipe Face Landmarker model
         script: |
+          set -e
           mkdir -p "$CM_BUILD_DIR/app/src/main/assets"
-          curl -L \
-            https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task \
-            -o "$CM_BUILD_DIR/app/src/main/assets/face_landmarker.task"
+
+          curl --fail --location --retry 3 --retry-delay 2 \
+            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task" \
+            --output "$CM_BUILD_DIR/app/src/main/assets/face_landmarker.task"
+
           test -s "$CM_BUILD_DIR/app/src/main/assets/face_landmarker.task"
-      - name: Set Android SDK location
+          echo "MediaPipe model downloaded successfully."
+
+      - name: Configure Android SDK
         script: |
+          set -e
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
+
       - name: Build debug APK
         script: |
-          /tmp/gradle/gradle-9.5/bin/gradle assembleDebug --stacktrace
+          set -e
+          cd "$CM_BUILD_DIR"
+          /tmp/gradle-9.5.0/bin/gradle assembleDebug --stacktrace
+
     artifacts:
       - app/build/outputs/apk/debug/app-debug.apk
